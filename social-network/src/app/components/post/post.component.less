@@ -1,0 +1,38 @@
+.post {
+    max-width: 400px;
+
+    &__header {
+        &-image {
+            background-size: cover;
+        }
+    }
+
+    &__comments-button {
+        cursor: pointer;
+        color: #8f8f8f;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: space-between;
+
+        &_left-side, &_right-side {
+            margin: 0 5px;
+
+            &._icon {
+                margin: 0 7px;
+                cursor: pointer;
+                transition: all .2s;
+
+                &:hover {
+                    transform: scale(1.2);
+                }
+            }
+        }
+
+    }
+}

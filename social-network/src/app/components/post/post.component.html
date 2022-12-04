@@ -1,0 +1,29 @@
+<mat-card class="post">
+    <mat-card-header class="post__header">
+        <div mat-card-avatar style="background-image: url('{{postData.user.avatarSrc}}')"
+             class="post__header-image"></div>
+        <mat-card-title class="post__header-username">{{postData.user.username}}</mat-card-title>
+        <mat-card-subtitle class="post__header-date">{{postData.date}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="{{postData.postImageSrc}}" alt="Post Image" class="post__image">
+    <mat-card-actions class="post__actions">
+        <div class="post__actions_left-side">
+            <mat-icon svgIcon="heart-white" class="post__actions_left-side _icon"></mat-icon>
+            <mat-icon svgIcon="comment-icon" class="post__actions_left-side _icon"></mat-icon>
+            <mat-icon svgIcon="send-icon" class="post__actions_left-side _icon"></mat-icon>
+        </div>
+        <div class="post__actions_right-side">
+            <mat-icon svgIcon="favorite-icon" class="post__actions_right-side _icon"></mat-icon>
+        </div>
+    </mat-card-actions>
+    <mat-card-content class="post__content">
+        <p class="post__content-field">
+            <b>{{postData.user.username}}</b>
+            {{postData.description}}
+        </p>
+    </mat-card-content>
+    <p (click)="commentsVisible = !commentsVisible" class="post__comments-button">
+        {{commentsVisible ? "Скрыть комментарии" : "Показать комментарии (" + postData.commentsCount + ")"}}
+    </p>
+    <comments *ngIf="commentsVisible"></comments>
+</mat-card>

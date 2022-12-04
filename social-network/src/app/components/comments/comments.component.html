@@ -1,0 +1,11 @@
+<div class="comments-list">
+    <div class="comments-list__comment" *ngFor="let comment of comments">
+        <div mat-card-avatar style="background-image: url('{{comment.user.avatarSrc}}')"
+             class="comments-list__comment-avatar"></div>
+        <p class="comments-list__comment-text">
+            <b>{{comment.user.username}}</b>
+            <br>
+            {{comment.commentText}}
+        </p>
+    </div>
+</div>
