@@ -1,4 +1,18 @@
 ## Endpoints 
+### [POST]  /register
+#### Required headers
+_Empty_
+#### Input body JSON
+```
+{
+    "username": "admin",
+    "password": "admin"
+}
+```
+#### Output body JSON
+```
+"OK"
+```
 
 ### [POST]  /login 
 #### Required headers
