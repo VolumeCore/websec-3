@@ -1,0 +1,17 @@
+version: '3.8'
+
+
+services:
+  server-dev-hotreload:
+    image: cosmtrek/air
+    # working_dir value has to be the same of mapped volume
+    working_dir: /app
+    ports:
+      - 5555:8080
+    volumes:
+      - ./social-network-server:/app
+  server-dev:
+    build: social-network-server
+    image: social-network-server:v1
+    ports:
+      - 5555:8080
