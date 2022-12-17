@@ -17,11 +17,19 @@ func Run(Port string, DB *gorm.DB) {
 		DB: DB,
 	}
 
-	router.POST("/register", h.registerHandler)
-	router.POST("/login", h.loginHandler)
-	router.POST("/refresh", h.refreshHandler)
-	router.GET("/auth/verify", h.authVerifyHandler)
-	router.GET("/whoami", h.whoamiHandler)
+	authorized := router.Group("/")
+	authorized.Use(checkJWT())
+	{
+		authorized.GET("/whoami", h.whoamiHandler)
+		authorized.GET("/auth/verify", h.authVerifyHandler)
+	}
+
+	open := router.Group("/")
+	{
+		open.POST("/register", h.registerHandler)
+		open.POST("/login", h.loginHandler)
+		open.POST("/refresh", h.refreshHandler)
+	}
 
 	router.Run(fmt.Sprintf(":%s", Port))
 }

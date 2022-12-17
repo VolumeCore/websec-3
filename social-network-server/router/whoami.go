@@ -2,24 +2,31 @@ package router
 
 import (
 	"fmt"
+	jwtmiddleware "github.com/auth0/go-jwt-middleware/v2"
+	"github.com/auth0/go-jwt-middleware/v2/validator"
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v4"
 	"net/http"
 	"social-network-server/common/utils"
 )
 
 func (h handler) whoamiHandler(c *gin.Context) {
-	tokenString := c.GetHeader("Authorization")
-
-	token, err := utils.CheckToken(tokenString)
-	if err != nil {
-		c.IndentedJSON(http.StatusForbidden, err.Error())
+	claims, ok := c.Request.Context().Value(jwtmiddleware.ContextKey{}).(*validator.ValidatedClaims)
+	if !ok {
+		c.AbortWithStatusJSON(
+			http.StatusInternalServerError,
+			map[string]string{"message": "Failed to get validated JWT claims."},
+		)
 		return
 	}
-
-	claims := token.Claims.(jwt.MapClaims)
-
-	username := claims["username"]
+	customClaims, ok := claims.CustomClaims.(*utils.Claims)
+	if !ok {
+		c.AbortWithStatusJSON(
+			http.StatusInternalServerError,
+			map[string]string{"message": "Failed to cast custom JWT claims to specific type."},
+		)
+		return
+	}
+	username := customClaims.Username
 
 	c.IndentedJSON(http.StatusOK, fmt.Sprint("Hi, ", username))
 }
