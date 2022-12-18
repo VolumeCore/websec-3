@@ -35,7 +35,7 @@ _Empty_
 ### [GET] /auth/verify
 #### Required headers
 ```
-Authorization: <token>
+Authorization: Bearer <token>
 ```
 #### Input body JSON
 _Empty_
