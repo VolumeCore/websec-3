@@ -5,6 +5,8 @@ WORKDIR /app
 COPY go.mod ./
 COPY go.sum ./
 RUN go mod download
+ADD common ./common
+ADD router ./router
 COPY *.go ./
 RUN go build -o /main
 EXPOSE 8080

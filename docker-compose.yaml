@@ -19,8 +19,8 @@ services:
     image: mysql:8.0.31
     environment:
       MYSQL_ROOT_PASSWORD: root
-    ports:
-      - 3307:3306
+#    ports:
+#      - 3307:3306
     volumes:
       - /var/lib/mysql:/var/lib/mysql
       - ./social-network-server/db_migration:/docker-entrypoint-initdb.d
