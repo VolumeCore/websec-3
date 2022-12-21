@@ -13,9 +13,11 @@ services:
       - /tmp/images:/images
   server-dev:
     build: social-network-server
-    image: social-network-server:v1
+    image: social-network-server:v2
     ports:
       - 5555:8080
+    volumes:
+      - /tmp/images:/images
   mysql:
     image: mysql:8.0.31
     environment:
@@ -30,6 +32,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - 3308:3306
+      - 3310:3306
     volumes:
       - ./social-network-server/db_migration/:/docker-entrypoint-initdb.d

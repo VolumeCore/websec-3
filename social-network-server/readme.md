@@ -70,7 +70,7 @@ Next js code do this request:
 let photo = document.getElementById("image-file").files[0];
 let formData = new FormData();
      
-formData.append("photo", photo);
+formData.append("file", photo);
 fetch('/upload', {method: "POST", body: formData});
 ```
 or check the same request via postman https://youtu.be/S7bwkys6D0E?t=29

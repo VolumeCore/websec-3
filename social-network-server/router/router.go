@@ -23,6 +23,8 @@ func Run(Port string, DB *gorm.DB) {
 		authorized.GET("/whoami", h.whoamiHandler)
 		authorized.GET("/auth/verify", h.authVerifyHandler)
 		authorized.POST("/upload/post", h.uploadPost)
+		authorized.GET("/posts", h.getPosts)
+		authorized.POST("/upload", h.uploadFile)
 	}
 
 	open := router.Group("/")
@@ -30,8 +32,6 @@ func Run(Port string, DB *gorm.DB) {
 		open.POST("/register", h.registerHandler)
 		open.POST("/login", h.loginHandler)
 		open.POST("/refresh", h.refreshHandler)
-		open.GET("/posts", h.getPosts)
-		open.POST("/upload", h.uploadFile)
 
 		// Only for develop
 		open.GET("/migration_run", h.automigationHandler)
