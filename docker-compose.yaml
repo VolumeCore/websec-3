@@ -10,6 +10,7 @@ services:
       - 5555:8080
     volumes:
       - ./social-network-server:/app
+      - /tmp/images:/images
   server-dev:
     build: social-network-server
     image: social-network-server:v1

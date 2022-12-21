@@ -3,6 +3,9 @@ package utils
 import (
 	"context"
 	"errors"
+	jwtmiddleware "github.com/auth0/go-jwt-middleware/v2"
+	"github.com/auth0/go-jwt-middleware/v2/validator"
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/uuid"
 	"hash/fnv"
@@ -24,6 +27,19 @@ func GetSecretKey() []byte {
 type Claims struct {
 	jwt.RegisteredClaims
 	Username string `json:"username"`
+}
+
+func GetCustomClaims(c *gin.Context) (*Claims, error) {
+	claims, ok := c.Request.Context().Value(jwtmiddleware.ContextKey{}).(*validator.ValidatedClaims)
+	if !ok {
+		return nil, errors.New("Failed to get validated JWT claims") //
+	}
+	customClaims, ok := claims.CustomClaims.(*Claims)
+	if !ok {
+		return nil, errors.New("Failed to cast custom JWT claims to specific type")
+	}
+
+	return customClaims, nil
 }
 
 func (c *Claims) Validate(ctx context.Context) error {

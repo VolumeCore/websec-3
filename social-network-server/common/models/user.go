@@ -8,4 +8,6 @@ type User struct {
 	Password     string `json:"password" gorm:"-"`
 	PasswordHash uint64 `json:"-"`
 	RefreshToken string `json:"-"`
+	Posts        []Post
+	Followers    []Follower
 }
