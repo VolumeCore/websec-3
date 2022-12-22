@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.19-alpine
+FROM golang:1.19-alpine as compiler
 WORKDIR /app
 
 COPY go.mod ./
@@ -9,7 +9,8 @@ RUN go mod download
 ADD common ./common
 ADD router ./router
 COPY *.go ./
-RUN ls -ll
-RUN go build -o /main
+RUN CGO_ENABLED=0 go build -o /main -ldflags '-s'
+FROM scratch
+COPY --from=compiler /main /
 EXPOSE 8080
 CMD [ "/main" ]

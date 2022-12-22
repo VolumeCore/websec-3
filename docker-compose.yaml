@@ -7,15 +7,13 @@ services:
     image: cosmtrek/air
     # working_dir value has to be the same of mapped volume
     working_dir: /app
-    depends_on:
-      - mysql-dev
     volumes:
       - ./social-network-server:/app
       - /tmp/images:/images
   server-dev:
     container_name: webserver
     build: social-network-server
-    image: social-network-server:v2
+    image: social-network-server:v5
     volumes:
       - /tmp/images:/images
   mysql:
@@ -39,11 +37,17 @@ services:
       - ./social-network-server/db_migration/:/docker-entrypoint-initdb.d
   nginx:
     container_name: nginx
-    depends_on:
-      - server-dev-hotreload
     image: nginx:latest
     ports:
       - 5556:80
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./social-network/nginx.conf:/etc/nginx/nginx.conf
+      - /tmp/images:/data/images
+  nginx-with-front:
+    container_name: front_nginx
+    build: social-network
+    image: social-network-frontend:v1
+    ports:
+      - 5556:80
+    volumes:
       - /tmp/images:/data/images
