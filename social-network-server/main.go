@@ -8,6 +8,6 @@ import (
 )
 
 func main() {
-	DB := db.Init(mysql.Open("root:root@tcp(mysql-dev)/social_network_db?parseTime=true"))
+	DB := db.Init(mysql.Open("root:root@tcp(mysqldb)/social_network_db?parseTime=true"))
 	httpEngine.Run("8080", DB)
 }

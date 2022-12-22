@@ -1,3 +1,6 @@
+# Important!!!
+If you use this server via nginx than you need append **/api/** before each endpoint.
+
 ## Endpoints 
 ### [POST]  /register
 #### Required headers
@@ -132,3 +135,13 @@ Optional query params: _offset_
 localhost:5555/posts // First 20 posts
 localhost:5555/posts?offset=10 // 20 posts beginning with 10 post
 ```
+
+### [GET] /img/<image_uid>
+No need append **/api/** before this endpoint, it refers to nginx, not api server. 
+Use _image_uid_ that you will get after upload image via _/upload_ api server endpoint.
+#### Required headers
+_Emtpy_
+#### Input
+_Emtpy_
+#### Output
+Image :)

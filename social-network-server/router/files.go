@@ -18,7 +18,7 @@ func (h handler) uploadFile(c *gin.Context) {
 
 	fileUID := uuid.New().String()
 
-	err = c.SaveUploadedFile(file, fmt.Sprintf("/images/image_%s.jpg", fileUID))
+	err = c.SaveUploadedFile(file, fmt.Sprintf("/images/%s", fileUID))
 	if err != nil {
 		return
 	}

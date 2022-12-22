@@ -3,22 +3,23 @@ version: '3.8'
 
 services:
   server-dev-hotreload:
+    container_name: webserver
     image: cosmtrek/air
     # working_dir value has to be the same of mapped volume
     working_dir: /app
-    ports:
-      - 5555:8080
+    depends_on:
+      - mysql-dev
     volumes:
       - ./social-network-server:/app
       - /tmp/images:/images
   server-dev:
+    container_name: webserver
     build: social-network-server
     image: social-network-server:v2
-    ports:
-      - 5555:8080
     volumes:
       - /tmp/images:/images
   mysql:
+    container_name: mysqldb
     image: mysql:8.0.31
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -28,6 +29,7 @@ services:
       - /var/lib/mysql:/var/lib/mysql
       - ./social-network-server/db_migration/:/docker-entrypoint-initdb.d
   mysql-dev:
+    container_name: mysqldb
     image: mysql:8.0.31
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -35,3 +37,13 @@ services:
       - 3310:3306
     volumes:
       - ./social-network-server/db_migration/:/docker-entrypoint-initdb.d
+  nginx:
+    container_name: nginx
+    depends_on:
+      - server-dev-hotreload
+    image: nginx:latest
+    ports:
+      - 5556:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - /tmp/images:/data/images
