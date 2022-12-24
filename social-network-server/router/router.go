@@ -34,6 +34,7 @@ func Run(Port string, DB *gorm.DB) {
 		authorized.GET("/subscribe", h.subscribe)
 		authorized.GET("/unsubscribe", h.unsubscribe)
 		authorized.GET("/get/user", h.getUser)
+		authorized.GET("/get/follows", h.getFollows)
 	}
 
 	open := router.Group("/")
