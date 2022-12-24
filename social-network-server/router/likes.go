@@ -34,7 +34,15 @@ func (h handler) unsetLike(c *gin.Context) {
 		return
 	}
 
+	claims, err := utils.GetCustomClaims(c)
+	if err != nil {
+		return
+	}
+	username := claims.Username
 	db := h.DB
+	var user models.User
+	db.First(&user).Where("username = ?", username)
+	like.UserId = user.ID
 	db.Delete(&like)
 
 	c.IndentedJSON(http.StatusOK, "OK")

@@ -92,19 +92,22 @@ Use this uid for send request to `/upload/post` endpoint.
 Authorization: Bearer <token>
 ```
 #### Input json
-Use _image_uid_ that you recived from `/upload` response.
+Use _imageUId_ that you recived from `/upload` response.
 ```json
 {
-    "name": "Some post",
-    "image_uid": "<image_uid>" 
+    "description": "Some post",
+    "imageUId": "8771c637-0e17-4850-b655-ab64f594f2f3"
 }
 ```
 #### Output body JSON
 ```json
 {
-  "id": 1,
-  "name": "Some post",
-  "image_uid": "d748e958-7869-4752-b3cc-be8681244f6f"
+    "PostId": 1,
+    "description": "Some post",
+    "userID": 1,
+    "imageUId": "8771c637-0e17-4850-b655-ab64f594f2f3",
+    "likes": null,
+    "comments": null
 }
 ```
 
@@ -119,14 +122,20 @@ Optional query params: _offset_
 ```json
 [
     {
-        "id": 1,
-        "name": "Some post",
-        "image_uid": "d748e958-7869-4752-b3cc-be8681244f6f"
+    "postId": 1,
+    "description": "Some post",
+    "userID": 1,
+    "imageUId": "8771c637-0e17-4850-b655-ab64f594f2f3",
+    "likes": null,
+    "comments": null
     },
     {
-        "id": 2,
-        "name": "Some post",
-        "image_uid": "d748e958-7869-4752-b3cc-be8681244f6f"
+    "postId": 2,
+    "description": "Some post",
+    "userID": 1,
+    "imageUId": "8771c637-0e17-4850-b655-ab64f594f2f3",
+    "likes": null,
+    "comments": null
     }
 ]
 ```
@@ -136,9 +145,83 @@ localhost:5555/posts // First 20 posts
 localhost:5555/posts?offset=10 // 20 posts beginning with 10 post
 ```
 
-### [GET] /img/<image_uid>
+### [POST] /set/like
+#### Required headers
+```
+Authorization: Bearer <token>
+```
+#### Input json
+```json
+{
+    "postId": 1
+}
+```
+#### Output body JSON
+```json
+{
+    "postId": 1,
+    "userId": 1
+}
+```
+
+### [POST] /unset/like
+#### Required headers
+```
+Authorization: Bearer <token>
+```
+#### Input json
+```json
+{
+  "postId": 1
+}
+```
+#### Output body
+```text
+"OK"
+```
+
+### [POST] /set/comment
+#### Required headers
+```
+Authorization: Bearer <token>
+```
+#### Input json
+```json
+{
+  "commentText": "Haha",
+  "postId": 1
+}
+```
+#### Output body json
+```json
+{
+  "commentId": 3,
+  "postId": 1,
+  "userId": 1,
+  "commentText": "Haha"
+}
+```
+
+### [POST] /unset/comment
+#### Required headers
+```
+Authorization: Bearer <token>
+```
+#### Input json
+```json
+{
+  "commentId": 3
+}
+```
+#### Output body
+```text
+"OK"
+```
+
+
+### [GET] /img/<imageUId>
 No need append **/api/** before this endpoint, it refers to nginx, not api server. 
-Use _image_uid_ that you will get after upload image via _/upload_ api server endpoint.
+Use _imageUId_ that you will get after upload image via _/upload_ api server endpoint.
 #### Required headers
 _Emtpy_
 #### Input

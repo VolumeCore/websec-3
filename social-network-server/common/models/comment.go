@@ -6,16 +6,16 @@ import (
 )
 
 type Comment struct {
-	gorm.Model `json:"-"`
-	PostId     uint   `json:"post_id"`
-	UserId     uint   `json:"-"`
-	Message    string `json:"message"`
+	gorm.Model  `json:"-"`
+	PostId      uint   `json:"postId"`
+	UserId      uint   `json:"userId"`
+	CommentText string `json:"commentText"`
 }
 
 func (p Comment) MarshalJSON() ([]byte, error) {
 	type Alias Comment
 	return json.Marshal(&struct {
-		ID uint `json:"id"`
+		ID uint `json:"commentId"`
 		*Alias
 	}{
 		Alias: (*Alias)(&p),
@@ -26,7 +26,7 @@ func (p Comment) MarshalJSON() ([]byte, error) {
 func (b *Comment) UnmarshalJSON(data []byte) error {
 	type Alias Comment
 	aux := &struct {
-		ID uint `json:"id"`
+		ID uint `json:"commentId"`
 		*Alias
 	}{
 		Alias: (*Alias)(b),
