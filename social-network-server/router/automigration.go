@@ -14,6 +14,7 @@ func (h handler) automigationHandler(c *gin.Context) {
 	db.AutoMigrate(models.Follower{})
 	db.AutoMigrate(models.Like{})
 	db.AutoMigrate(models.Comment{})
+	db.AutoMigrate(models.Follow{})
 
 	c.String(http.StatusOK, "OK")
 }

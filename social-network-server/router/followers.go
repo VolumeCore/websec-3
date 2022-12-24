@@ -21,8 +21,8 @@ func (h handler) subscribe(c *gin.Context) {
 
 	var follower = models.User{Username: claims.Username}
 	db.Where("username = ?", follower.Username).First(&follower)
-	fmt.Println(follower.ID, user.ID)
 	db.Create(&models.Follower{SubID: follower.ID, UserID: user.ID})
+	db.Create(&models.Follow{UserId: follower.ID, FollowId: user.ID})
 	c.IndentedJSON(http.StatusOK, "OK")
 }
 
@@ -39,5 +39,6 @@ func (h handler) unsubscribe(c *gin.Context) {
 	var follower = models.User{Username: claims.Username}
 	db.Where("username = ?", follower.Username).First(&follower)
 	db.Where("sub_id = ? and user_id = ?", follower.ID, user.ID).Delete(&models.Follower{})
+	db.Where("follow_id = ? and user_id = ?", user.ID, follower.ID).Delete(&models.Follower{})
 	c.IndentedJSON(http.StatusOK, "OK")
 }

@@ -12,4 +12,5 @@ type User struct {
 	RefreshToken string     `json:"-"`
 	Posts        []Post     `json:"posts"`
 	Followers    []Follower `json:"followers"`
+	Follows      []Follow   `json:"follows"`
 }
