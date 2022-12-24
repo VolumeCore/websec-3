@@ -8,7 +8,7 @@ import {DataService} from "../../services/data.service";
     styleUrls: ['./comments.component.less']
 })
 export class CommentsComponent implements OnInit {
-    public comments: CommentModel[];
+    public comments: CommentModel[] = [];
 
     constructor(private dataService: DataService) {
     }

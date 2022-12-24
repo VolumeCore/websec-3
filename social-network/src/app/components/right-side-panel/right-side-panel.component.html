@@ -1,0 +1,24 @@
+<div class="right-side-panel">
+    <mat-card class="my-account">
+        <mat-card-header class="my-account__header">
+            <div mat-card-avatar
+                 style="background-image: url('{{loggedInUser.avatarSrc}}'); width: 55px; height: 55px;"
+                 class="my-account__header-image"
+            ></div>
+            <mat-card-title class="my-account__header-username">{{loggedInUser.username}}</mat-card-title>
+            <mat-card-subtitle class="my-account__header-followers">Подписчики: 541</mat-card-subtitle>
+            <mat-card-subtitle class="my-account__header-posts">Постов: 42</mat-card-subtitle>
+        </mat-card-header>
+    </mat-card>
+    <mat-card class="followed-users" id="followedBlock">
+        <mat-card-header *ngFor="let followedUser of subscriptions" class="followed-user__header">
+            <div mat-card-avatar
+                 style="background-image: url('{{followedUser.avatarSrc}}')"
+                 class="followed-user__header-image"
+            ></div>
+            <mat-card-title class="followed-user__header-username">{{followedUser.username}}</mat-card-title>
+            <mat-card-subtitle class="post__header-date">Отписаться</mat-card-subtitle>
+        </mat-card-header>
+    </mat-card>
+</div>
+

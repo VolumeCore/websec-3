@@ -7,5 +7,55 @@ html, body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    background: #ededed;
+    background: #FAFAFA;
+}
+
+// Below is overriding carousel styles
+// Such a bad code, but it is allowed in case overriding npm components
+
+.carousel {
+
+    .carousel-arrows {
+
+        .carousel-arrow {
+            width: 20px !important;
+            height: 20px !important;
+            opacity: .75;
+            top: 110% !important;
+
+            &-prev {
+                left: -2% !important;
+            }
+
+            &-next {
+                right: -2% !important;
+            }
+        }
+    }
+
+    &-cell {
+        overflow: visible !important;
+
+        img {
+            width: 56px !important;
+            height: 56px !important;
+            border-radius: 50%;
+        }
+
+        &__info {
+            margin-top: -8px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    }
+
+    &-container {
+        height: 70px !important;
+        overflow: visible !important;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
 }

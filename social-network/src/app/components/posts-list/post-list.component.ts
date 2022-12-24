@@ -3,12 +3,12 @@ import {DataService} from "../../services/data.service";
 import {PostModel} from "../../models/common.model";
 
 @Component({
-    selector: 'posts-list',
-    templateUrl: './posts-list.component.html',
-    styleUrls: ['./posts-list.component.less'],
+    selector: 'post-list',
+    templateUrl: './post-list.component.html',
+    styleUrls: ['./post-list.component.less'],
     encapsulation: ViewEncapsulation.None,
 })
-export class PostsListComponent implements OnInit {
+export class PostListComponent implements OnInit {
     public postsList: PostModel[] = [];
 
     constructor(public dataService: DataService) {

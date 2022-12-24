@@ -25,7 +25,19 @@ export class DataService {
                 avatarSrc: "https://sun9-20.userapi.com/impg/AwDJtQwEGsPuAPNIzklQPe43_OHVCjxqmi9roQ/eIMUwegjufo.jpg?size=1440x1800&quality=95&sign=1df94f38ce4084f830eaf0f9c3d92a14&type=album"
             },
             date: "26-11-2022 11:05",
-            postImageSrc: "https://sun9-17.userapi.com/impg/yHsqnHefEqiqmsAhD94T2sCFBTAfINh0y-OD7w/3VPgsIg8rFs.jpg?size=416x604&quality=95&sign=daf37958a4e55ab64c5045e570c5cc62&type=album",
+            postImageSrc: "https://sun9-28.userapi.com/impg/UCXKLoeXtjBzNc3fnI0okilZi058XV7VontqRg/UouybG5YMuY.jpg?size=640x640&quality=95&sign=df3fa9643a308ad0576345827403207a&type=album",
+            likesCount: 50,
+            description: "Ещё одна неплохая фоточка",
+            commentsCount: 2
+        },
+        {
+            id: "333",
+            user: {
+                username: "VolumeCore",
+                avatarSrc: "https://sun9-20.userapi.com/impg/AwDJtQwEGsPuAPNIzklQPe43_OHVCjxqmi9roQ/eIMUwegjufo.jpg?size=1440x1800&quality=95&sign=1df94f38ce4084f830eaf0f9c3d92a14&type=album"
+            },
+            date: "26-11-2022 11:05",
+            postImageSrc: "https://sun9-42.userapi.com/impg/Ho7qew4AIoWjI8D793C2UpH5eHhd08KlvnzYng/_3ZnSmeEkZI.jpg?size=759x767&quality=95&sign=f5956f9b4b9d4e3f9cb7e4f4f743b725&type=album",
             likesCount: 50,
             description: "Ещё одна неплохая фоточка",
             commentsCount: 2
