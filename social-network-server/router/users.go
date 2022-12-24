@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"social-network-server/common/models"
+	"social-network-server/common/utils"
 	"strconv"
 )
 
@@ -37,4 +38,19 @@ func (h handler) getFollows(c *gin.Context) {
 	db.Joins("left join followers on followers.user_id = users.id").Where("sub_id = ?", user.ID).Find(&followsUsers)
 
 	c.IndentedJSON(http.StatusOK, followsUsers)
+}
+
+func (h handler) setBio(c *gin.Context) {
+	claims, err := utils.GetCustomClaims(c)
+	if err != nil {
+		return
+	}
+	new_bio := c.PostForm("bio")
+	user := models.User{Username: claims.Username}
+	db := h.DB
+	db.Where("username = ?", user.Username).First(&user)
+
+	user.Bio = new_bio
+	db.Save(&user)
+	c.IndentedJSON(http.StatusOK, "OK")
 }
