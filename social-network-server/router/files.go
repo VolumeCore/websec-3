@@ -23,5 +23,5 @@ func (h handler) uploadFile(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, map[string]string{"image_uid": fileUID})
+	c.IndentedJSON(http.StatusOK, map[string]string{"imageUId": fileUID})
 }
