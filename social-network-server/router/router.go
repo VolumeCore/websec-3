@@ -25,6 +25,12 @@ func Run(Port string, DB *gorm.DB) {
 		authorized.POST("/upload/post", h.uploadPost)
 		authorized.GET("/posts", h.getPosts)
 		authorized.POST("/upload", h.uploadFile)
+		authorized.POST("/set/like", h.setLike)
+		authorized.POST("/set/comment", h.setComment)
+		authorized.POST("/unset/like", h.unsetLike)
+		authorized.POST("/unset/comment", h.unsetComment)
+		authorized.GET("/subscribe", h.subscribe)
+		authorized.GET("/unsubscribe", h.unsubscribe)
 	}
 
 	open := router.Group("/")

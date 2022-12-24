@@ -5,17 +5,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type Post struct {
+type Comment struct {
 	gorm.Model `json:"-"`
-	Name       string    `json:"name"`
-	UserId     uint      `json:"-"`
-	ImageUID   string    `json:"image_uid"`
-	Likes      []Like    `json:"likes"`
-	Comments   []Comment `json:"comments"`
+	PostId     uint   `json:"post_id"`
+	UserId     uint   `json:"-"`
+	Message    string `json:"message"`
 }
 
-func (p Post) MarshalJSON() ([]byte, error) {
-	type Alias Post
+func (p Comment) MarshalJSON() ([]byte, error) {
+	type Alias Comment
 	return json.Marshal(&struct {
 		ID uint `json:"id"`
 		*Alias
@@ -25,8 +23,8 @@ func (p Post) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (b *Post) UnmarshalJSON(data []byte) error {
-	type Alias Post
+func (b *Comment) UnmarshalJSON(data []byte) error {
+	type Alias Comment
 	aux := &struct {
 		ID uint `json:"id"`
 		*Alias
