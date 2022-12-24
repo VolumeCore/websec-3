@@ -1,7 +1,9 @@
 package router
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"net/http"
 	"social-network-server/common/models"
 	"social-network-server/common/utils"
 )
@@ -13,13 +15,15 @@ func (h handler) subscribe(c *gin.Context) {
 	}
 	db := h.DB
 	user := models.User{Username: c.Query("username")}
-	db.First(&user).Where("username = ?", user.Username)
+	fmt.Println(user.ID)
+	db.Where("username = ?", user.Username).Find(&user)
 	// TODO: Check if user exists that follower wanted
 
 	var follower = models.User{Username: claims.Username}
-	db.First(&follower).Where("username = ?", follower.Username)
-
-	db.Create(models.Follower{SubID: follower.ID, UserID: user.ID})
+	db.Where("username = ?", follower.Username).First(&follower)
+	fmt.Println(follower.ID, user.ID)
+	db.Create(&models.Follower{SubID: follower.ID, UserID: user.ID})
+	c.IndentedJSON(http.StatusOK, "OK")
 }
 
 func (h handler) unsubscribe(c *gin.Context) {
@@ -29,11 +33,11 @@ func (h handler) unsubscribe(c *gin.Context) {
 	}
 	db := h.DB
 	user := models.User{Username: c.Query("username")}
-	db.First(&user).Where("username = ?", user.Username)
+	db.Where("username = ?", user.Username).First(&user)
 	// TODO: Check if user exists that follower wanted
 
 	var follower = models.User{Username: claims.Username}
-	db.First(&follower).Where("username = ?", follower.Username)
-
-	db.Delete(models.Follower{SubID: follower.ID, UserID: user.ID})
+	db.Where("username = ?", follower.Username).First(&follower)
+	db.Where("sub_id = ? and user_id = ?", follower.ID, user.ID).Delete(&models.Follower{})
+	c.IndentedJSON(http.StatusOK, "OK")
 }
