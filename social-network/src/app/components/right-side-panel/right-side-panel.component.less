@@ -1,5 +1,6 @@
 .right-side-panel {
     width: 350px;
+    position: fixed;
 
     .followed-users {
         margin-top: 15px;
@@ -13,8 +14,27 @@
             }
 
             &-followers {
-                margin-top: 10px;
-                margin-bottom: 10px;
+                margin-top: 8px;
+                margin-bottom: 6px;
+            }
+
+            mat-icon {
+                padding-left: 80px;
+                padding-top: 20px;
+                cursor: pointer;
+                transition: all .25s;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+
+            &-login, &-register {
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                }
             }
         }
     }
@@ -26,7 +46,15 @@
 
     .followed-users {
         padding-bottom: 0;
-        position: fixed;
         width: 318px;
+    }
+
+    .create-post {
+        height: 300px;
+        margin-top: 15px;
+
+        h3 {
+            font-weight: 500;
+        }
     }
 }

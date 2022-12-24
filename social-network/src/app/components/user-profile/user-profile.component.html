@@ -1,1 +1,17 @@
-<!--TODO @VolumeCore-->
+<div class="user-profile" *ngIf="userInfo">
+    <div class="user-info">
+        <img class="user-info__image" src="{{userInfo.avatarSrc}}" alt="">
+        <div class="user-info-description">
+            <h3 class="user-info-description__username" style="font-size: 26px;"><b>{{userInfo.username}}</b></h3>
+            <p>Подписчики {{userInfo.followersCount}} &nbsp;&nbsp;&nbsp; Подписки {{userInfo.followsCount}}</p>
+            <p class="user-info-description__bio">{{userInfo.bio}}</p>
+        </div>
+    </div>
+    <div class="user-posts">
+        <mat-grid-list class="user-posts__grid" cols="3" rowHeight="1:1" gutterSize="20">
+            <mat-grid-tile class="user-posts__grid-tile" *ngFor="let post of userInfo.posts">
+                <img src="{{post.postImageSrc}}" alt="">
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</div>

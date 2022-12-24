@@ -14,6 +14,24 @@ import {RightSidePanelComponent} from './components/right-side-panel/right-side-
 import {HeaderCarouselComponent} from './components/header-carousel/header-carousel.component';
 import {IvyCarouselModule} from "angular-responsive-carousel";
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import {MatGridListModule} from "@angular/material/grid-list";
+import {RouterModule, Routes} from "@angular/router";
+import { AuthorizationComponent } from './components/authorization/authorization.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {FormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { HomeComponent } from './components/home/home.component';
+import {HttpClientModule} from "@angular/common/http";
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+
+const routes: Routes = [
+    {path : '', component : HomeComponent},
+    {path : 'user/:username', component : UserProfileComponent},
+    {path : 'login', component : AuthorizationComponent},
+    {path : 'register', component : AuthorizationComponent},
+    {path : '401', component : UnauthorizedComponent}
+];
 
 @NgModule({
     declarations: [
@@ -24,6 +42,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
         RightSidePanelComponent,
         HeaderCarouselComponent,
         UserProfileComponent,
+        AuthorizationComponent,
+        HomeComponent,
+        UnauthorizedComponent,
     ],
     imports: [
         BrowserModule,
@@ -31,7 +52,15 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
         MatCardModule,
         MatButtonModule,
         MatIconModule,
-        IvyCarouselModule
+        IvyCarouselModule,
+        MatGridListModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatInputModule,
+        MatCheckboxModule,
+        [RouterModule.forRoot(routes)],
+        [RouterModule],
+        HttpClientModule
     ],
     providers: [DataService],
     bootstrap: [AppComponent]

@@ -1,24 +1,49 @@
 <div class="right-side-panel">
     <mat-card class="my-account">
-        <mat-card-header class="my-account__header">
+        <mat-card-header class="my-account__header" *ngIf="isAuthorized; else noAuthorized">
             <div mat-card-avatar
                  style="background-image: url('{{loggedInUser.avatarSrc}}'); width: 55px; height: 55px;"
                  class="my-account__header-image"
             ></div>
-            <mat-card-title class="my-account__header-username">{{loggedInUser.username}}</mat-card-title>
-            <mat-card-subtitle class="my-account__header-followers">Подписчики: 541</mat-card-subtitle>
-            <mat-card-subtitle class="my-account__header-posts">Постов: 42</mat-card-subtitle>
+            <mat-card-title class="my-account__header-username" [routerLink]="['user', loggedInUser.username]" routerLinkActive="active" style="cursor: pointer">{{loggedInUser.username}}</mat-card-title>
+            <mat-icon svgIcon="logout-icon" class="post__actions_right-side _icon" (click)="logout()"></mat-icon>
+            <mat-card-subtitle class="my-account__header-followers">Подписчики {{loggedInUser.followersCount}}</mat-card-subtitle>
+            <mat-card-subtitle class="my-account__header-posts">Постов {{loggedInUser.followsCount}}</mat-card-subtitle>
         </mat-card-header>
     </mat-card>
-    <mat-card class="followed-users" id="followedBlock">
-        <mat-card-header *ngFor="let followedUser of subscriptions" class="followed-user__header">
+    <mat-card class="followed-users">
+        <h3 style="{{subscriptions.length ? '' : 'padding-bottom: 12px;'}} font-weight: 500;">{{subscriptions.length ? 'Ваши подписки' : 'Вы ни на кого не подписаны'}}</h3>
+        <mat-card-header *ngFor="let followedUser of subscriptions.slice(0, 6)" class="followed-user__header">
             <div mat-card-avatar
                  style="background-image: url('{{followedUser.avatarSrc}}')"
                  class="followed-user__header-image"
             ></div>
-            <mat-card-title class="followed-user__header-username">{{followedUser.username}}</mat-card-title>
+            <mat-card-title class="followed-user__header-username" [routerLink]="['user', followedUser.username]" style="cursor: pointer">{{followedUser.username}}</mat-card-title>
             <mat-card-subtitle class="post__header-date">Отписаться</mat-card-subtitle>
         </mat-card-header>
     </mat-card>
+    <mat-card class="create-post">
+        <h3>Создать пост</h3>
+        <button type="button" mat-raised-button (click)="fileInput.click()">Выбрать фото</button><span style="margin-left: 10px;">{{uploadedFileName !== '' ? uploadedFileName.slice(0, 8) + '...' : ''}}</span>
+        <input hidden (change)="updateFileName()" #fileInput type="file" id="file">
+        <br>
+        <mat-form-field style="margin-top: 20px; width: 100%; height: 120px;" appearance="fill">
+            <mat-label>Описание публикации</mat-label>
+            <textarea matInput [(ngModel)]="createPostDescription" #desc="ngModel" name="desc" id="postDescription" style="resize: none; height: 100px;"></textarea>
+        </mat-form-field>
+        <br>
+        <button *ngIf="uploadedFileName !== ''" type="button" mat-raised-button (click)="createPostRequest()" style="margin-top: 30px;">Загрузить</button>
+    </mat-card>
 </div>
+
+<ng-template #noAuthorized>
+    <mat-card-header class="my-account__header" style="margin-top: 10px;">
+        <div mat-card-avatar
+             style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg'); width: 55px; height: 55px;"
+             class="my-account__header-image"
+        ></div>
+        <mat-card-title class="my-account__header-login" routerLink="login" routerLinkActive="active">Вход</mat-card-title>
+        <mat-card-title class="my-account__header-register" routerLink="register" routerLinkActive="active">Регистрация</mat-card-title>
+    </mat-card-header>
+</ng-template>
 

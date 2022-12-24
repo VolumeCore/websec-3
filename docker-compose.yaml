@@ -13,7 +13,7 @@ services:
   server-dev:
     container_name: webserver
     build: social-network-server
-    image: social-network-server:v5
+    image: social-network-server:v15
     volumes:
       - /tmp/images:/images
   mysql:

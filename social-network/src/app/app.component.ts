@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from "@angular/platform-browser";
-import {commentIcon, favoriteIcon, heartRed, heartWhite, sendIcon} from "./constants/icons.const";
+import {commentIcon, favoriteIcon, heartRed, heartWhite, logoutIcon, sendIcon} from "./constants/icons.const";
 
 @Component({
     selector: 'app-root',
@@ -15,6 +15,7 @@ export class AppComponent {
         iconRegistry.addSvgIconLiteral('send-icon', sanitizer.bypassSecurityTrustHtml(sendIcon));
         iconRegistry.addSvgIconLiteral('favorite-icon', sanitizer.bypassSecurityTrustHtml(favoriteIcon));
         iconRegistry.addSvgIconLiteral('comment-icon', sanitizer.bypassSecurityTrustHtml(commentIcon));
+        iconRegistry.addSvgIconLiteral('logout-icon', sanitizer.bypassSecurityTrustHtml(logoutIcon));
     }
     title = 'social-network';
 }

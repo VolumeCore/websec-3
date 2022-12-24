@@ -1,0 +1,44 @@
+.user-profile {
+    margin: 50px auto 0;
+    position: relative;
+    max-width: 700px;
+    background: #fff7f7;
+
+    .user-info {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+
+        &__image {
+            position: absolute;
+            top: 50%;
+            left: 15%;
+            width: 150px;
+            height: 150px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        &-description {
+            margin-top: 20px;
+            margin-left: 220px;
+        }
+    }
+
+    .user-posts {
+        margin-top: 50px;
+
+        &__grid {
+
+            &-tile {
+                margin: 20px;
+
+                img {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+            }
+        }
+    }
+}

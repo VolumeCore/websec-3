@@ -5,6 +5,9 @@ export interface UserModel {
     postsCount?: number;
     followersCount?: number;
     followsCount?: number;
+    followers?: UserModel[];
+    follows?: UserModel[];
+    posts?: PostModel[];
 }
 
 export interface AuthModel {
@@ -26,4 +29,5 @@ export interface PostModel {
     likesCount: number;
     description: string;
     commentsCount: number;
+    comments: CommentModel[];
 }

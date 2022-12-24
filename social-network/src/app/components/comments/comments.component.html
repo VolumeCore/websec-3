@@ -8,4 +8,9 @@
             {{comment.commentText}}
         </p>
     </div>
+    <mat-form-field style="width: 100%; height: 20px;" appearance="fill">
+        <mat-label>Текст комментария</mat-label>
+        <textarea matInput [(ngModel)]="newCommentText" #commentText="ngModel" name="commentText" id="commentText" style="resize: none; height: 20px;"></textarea>
+    </mat-form-field>
+    <button type="button" mat-flat-button (click)="addComment()" style="margin-top: 30px;">Добавить</button>
 </div>

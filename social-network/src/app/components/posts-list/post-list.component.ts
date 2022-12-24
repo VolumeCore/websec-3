@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {DataService} from "../../services/data.service";
-import {PostModel} from "../../models/common.model";
+import {CommentModel, PostModel} from "../../models/common.model";
 
 @Component({
     selector: 'post-list',
@@ -16,6 +16,8 @@ export class PostListComponent implements OnInit {
 
     ngOnInit(): void {
         this.postsList = this.dataService.getPosts();
+
+        console.log(this.postsList);
     }
 
 }
