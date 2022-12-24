@@ -26,6 +26,7 @@ func (h handler) uploadPost(c *gin.Context) {
 	db := h.DB
 	db.Find(&user).Where("username = ?", customClaims.Username)
 	p.UserId = user.ID
+	p.Username = user.Username
 	db.Create(&p)
 
 	c.IndentedJSON(http.StatusOK, p)

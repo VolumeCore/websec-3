@@ -9,6 +9,7 @@ type Post struct {
 	gorm.Model  `json:"-"`
 	Description string    `json:"description"`
 	UserId      uint      `json:"userID"`
+	Username    string    `json:"username"`
 	ImageUId    string    `json:"imageUId"`
 	Likes       []Like    `json:"likes"`
 	Comments    []Comment `json:"comments"`
@@ -17,11 +18,13 @@ type Post struct {
 func (p Post) MarshalJSON() ([]byte, error) {
 	type Alias Post
 	return json.Marshal(&struct {
-		ID uint `json:"postId"`
+		ID   uint   `json:"postId"`
+		Date string `json:"date"`
 		*Alias
 	}{
 		Alias: (*Alias)(&p),
 		ID:    p.Model.ID,
+		Date:  p.Model.UpdatedAt.String(),
 	})
 }
 
