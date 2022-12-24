@@ -15,11 +15,13 @@ type Comment struct {
 func (p Comment) MarshalJSON() ([]byte, error) {
 	type Alias Comment
 	return json.Marshal(&struct {
-		ID uint `json:"commentId"`
+		ID   uint   `json:"commentId"`
+		Date string `json:"date"`
 		*Alias
 	}{
 		Alias: (*Alias)(&p),
 		ID:    p.Model.ID,
+		Date:  p.Model.CreatedAt.String(),
 	})
 }
 
