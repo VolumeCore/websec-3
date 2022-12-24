@@ -16,6 +16,6 @@ func (h handler) getUser(c *gin.Context) {
 		return
 	}
 	user.ID = uint(id)
-	db.First(&user).Where("id = ?", user.ID)
+	db.Preload("Posts").Preload("Followers").First(&user).Where("id = ?", user.ID)
 	c.IndentedJSON(http.StatusOK, user)
 }
