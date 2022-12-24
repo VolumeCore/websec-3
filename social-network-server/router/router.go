@@ -2,6 +2,7 @@ package router
 
 import (
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -18,6 +19,7 @@ func Run(Port string, DB *gorm.DB) {
 	}
 
 	authorized := router.Group("/")
+	authorized.Use(cors.Default())
 	authorized.Use(checkJWT())
 	{
 		authorized.GET("/whoami", h.whoamiHandler)
@@ -34,6 +36,7 @@ func Run(Port string, DB *gorm.DB) {
 	}
 
 	open := router.Group("/")
+	open.Use(cors.Default())
 	{
 		open.POST("/register", h.registerHandler)
 		open.POST("/login", h.loginHandler)
