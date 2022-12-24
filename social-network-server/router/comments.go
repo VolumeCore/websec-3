@@ -21,7 +21,7 @@ func (h handler) setComment(c *gin.Context) {
 
 	var user = models.User{Username: claims.Username}
 	db := h.DB
-	db.Find(&user).Where("username = ?", user.Username)
+	db.Where("username = ?", user.Username).Find(&user)
 
 	comment.UserId = user.ID
 	db.Create(&comment)

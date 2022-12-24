@@ -24,7 +24,7 @@ func (h handler) uploadPost(c *gin.Context) {
 
 	var user models.User
 	db := h.DB
-	db.Find(&user).Where("username = ?", customClaims.Username)
+	db.Where("username = ?", customClaims.Username).Find(&user)
 	p.UserId = user.ID
 	p.Username = user.Username
 	db.Create(&p)

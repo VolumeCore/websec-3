@@ -21,7 +21,7 @@ func (h handler) setLike(c *gin.Context) {
 	username := claims.Username
 	db := h.DB
 	var user models.User
-	db.First(&user).Where("username = ?", username)
+	db.Where("username = ?", username).First(&user)
 	like.UserId = user.ID
 	db.Create(&like)
 	c.IndentedJSON(http.StatusOK, like)
@@ -41,7 +41,7 @@ func (h handler) unsetLike(c *gin.Context) {
 	username := claims.Username
 	db := h.DB
 	var user models.User
-	db.First(&user).Where("username = ?", username)
+	db.Where("username = ?", username).First(&user)
 	like.UserId = user.ID
 	db.Delete(&like)
 
