@@ -44,6 +44,6 @@ func (h handler) getPosts(c *gin.Context) {
 	db := h.DB
 	var posts []models.Post
 
-	db.Order("created_at").Offset(offset).Limit(count_posts_in_responce).Preload("Comments").Preload("Likes").Find(&posts)
+	db.Order("created_at desc").Offset(offset).Limit(count_posts_in_responce).Preload("Comments").Preload("Likes").Find(&posts)
 	c.IndentedJSON(http.StatusOK, posts)
 }
