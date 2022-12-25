@@ -83,7 +83,9 @@ export class RightSidePanelComponent implements OnInit {
     public logout(): void {
         localStorage.removeItem("token");
         localStorage.removeItem("refreshToken");
+        localStorage.removeItem("username");
         this.isAuthorized = false;
+        location.reload();
     }
 
     public updateFileName(): void {

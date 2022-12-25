@@ -1,8 +1,9 @@
 <mat-card class="post no-border" *ngIf="postData" [ngClass]="{'no-border': isDialog}">
     <mat-card-header class="post__header">
         <div mat-card-avatar
-             style="background-image: url('{{postData.user.avatarSrc}}')"
+             style="background-image: url('{{postData.user.avatarSrc}}'); cursor: pointer;"
              class="post__header-image"
+             [routerLink]="['user', postData.user.username]"
         ></div>
         <mat-card-title class="post__header-username" style="cursor: pointer" [routerLink]="['user', postData.user.username]">{{postData.user.username}}</mat-card-title>
         <mat-card-subtitle class="post__header-date">{{postData.date}}</mat-card-subtitle>
