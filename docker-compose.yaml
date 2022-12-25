@@ -45,19 +45,19 @@ services:
   nginx-with-front:
     container_name: front_nginx
     build: social-network
-    image: social-network-frontend:v3
+    image: social-network-frontend:v4
     ports:
       - 5556:80
     volumes:
       - /tmp/images:/data/images
   server:
     container_name: webserver
-    image: social-network-server:v1.0
+    image: social-network-server:v1.1
     volumes:
       - /tmp/images:/images
   front:
     container_name: front_nginx
-    image: social-network:v1.0
+    image: social-network:v1.3
     ports:
       - 80:80
     volumes:

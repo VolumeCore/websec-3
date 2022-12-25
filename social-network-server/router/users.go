@@ -22,15 +22,14 @@ func (h handler) getUser(c *gin.Context) {
 	var user models.User
 	if len(id_str) == 0 {
 		user.Username = c.Query("username")
-		db.Preload("Posts").Preload("Followers").Preload("Follows").Where("username = ?", user.Username).Find(&user)
+		db.Preload("Comments").Preload("Posts").Preload("Followers").Preload("Follows").Where("username = ?", user.Username).Find(&user)
 	} else {
 		id, err := strconv.Atoi(id_str)
 		if err != nil {
 			return
 		}
 		user.ID = uint(id)
-
-		db.Preload("Posts").Preload("Followers").Preload("Follows").Where("id = ?", user.ID).Find(&user)
+		db.Preload("Posts.Comments").Preload("Posts").Preload("Followers").Preload("Follows").Where("id = ?", user.ID).Find(&user).Joins("Comment")
 	}
 
 	c.IndentedJSON(http.StatusOK, user)

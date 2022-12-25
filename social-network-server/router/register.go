@@ -1,7 +1,9 @@
 package router
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"social-network-server/common/models"
 	"social-network-server/common/utils"
 )
@@ -23,7 +25,15 @@ func (h handler) registerHandler(c *gin.Context) {
 		return
 	}
 
+	fileUID := uuid.New().String()
+	url := "https://xsgames.co/randomusers/avatar.php?g=pixel"
+	err := utils.DownloadFile(url, fmt.Sprintf("/images/%s", fileUID))
+	if err != nil {
+		return
+	}
+
 	userFromContext.PasswordHash = utils.GetPasswordHash(userFromContext.Password)
+	userFromContext.ImageUId = fileUID
 	db.Create(&userFromContext)
 
 	c.IndentedJSON(200, "OK")
