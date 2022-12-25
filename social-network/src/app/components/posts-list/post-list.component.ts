@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {DataService} from "../../services/data.service";
-import {CommentModel, PostModel} from "../../models/common.model";
+import {PostModel} from "../../models/common.model";
 
 @Component({
     selector: 'post-list',
@@ -19,5 +19,4 @@ export class PostListComponent implements OnInit {
 
         console.log(this.postsList);
     }
-
 }

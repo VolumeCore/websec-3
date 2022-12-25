@@ -1,7 +1,11 @@
 .user-profile {
-    margin: 50px auto 0;
+    margin: 0 auto;
     position: relative;
     max-width: 700px;
+    padding-left: 50px;
+    padding-right: 90px;
+    padding-top: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.21);
     background: #fff7f7;
 
     .user-info {
@@ -22,7 +26,19 @@
 
         &-description {
             margin-top: 20px;
-            margin-left: 220px;
+            margin-left: 190px;
+            font-size: 18px;
+
+            &__username {
+                display: flex;
+                margin-bottom: 10px;
+
+                button {
+                    margin-left: 20px;
+                    height: 30px;
+                    font-size: 14px;
+                }
+            }
         }
     }
 
@@ -33,6 +49,16 @@
 
             &-tile {
                 margin: 20px;
+                cursor: pointer;
+                transition: all .25s;
+                border: 1px solid rgba(0, 0, 0, 0.21);
+                border-radius: 10%;
+                background: white;
+
+                &:hover {
+                    transform: scale(1.1);
+                    opacity: 90%;
+                }
 
                 img {
                     max-width: 100%;

@@ -11,16 +11,22 @@ export class CommentsComponent implements OnInit {
     @Input() public comments: CommentModel[] = [];
     @Input() public postId: string;
     public newCommentText: string;
+    public commentsShowCount: number = 3;
+    public isAuthorized: boolean = false;
 
     constructor(private dataService: DataService) {
     }
 
     ngOnInit(): void {
+        this.isAuthorized = !!localStorage.getItem("token");
     }
 
     public addComment(): void {
         // @ts-ignore
-        const commentText = document.getElementById("commentText")?.value || 'Случайный текст комментария';
+        const commentText = document.getElementById("commentText")?.value || '';
+        if (commentText.length > 200 || commentText === '') {
+            return;
+        }
         this.dataService.addComment(commentText, this.postId)
             .subscribe((res: any) => {
                 console.log(res);

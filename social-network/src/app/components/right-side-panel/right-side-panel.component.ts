@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserModel} from "../../models/common.model";
 import {DataService} from "../../services/data.service";
-import {Observable, switchMap} from "rxjs";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'right-side-panel',
@@ -14,6 +14,7 @@ export class RightSidePanelComponent implements OnInit {
     public isAuthorized: boolean = false;
     public createPostDescription: string = '';
     public uploadedFileName: string = '';
+    public followersSubscriptions: Subscription;
 
     constructor(private dataService: DataService) {
     }
@@ -21,6 +22,31 @@ export class RightSidePanelComponent implements OnInit {
     ngOnInit(): void {
         this.isAuthorized = !!localStorage.getItem("token");
         console.log(localStorage.getItem("username"));
+        this.followersSubscriptions = this.dataService.subscriptionChange.subscribe((value: any) => { console.log(value);
+            console.log('WWWWWWWWWWW'); value ? this.updateSubs(value) : false }, (err: any) => console.log(err));
+        this.loadSubs();
+    }
+
+    private updateSubs(result: { subscribed: boolean, username: string }): void {
+        console.log('VVVVVVVVVVVVVV');
+        if (result.subscribed) {
+            console.log('IIIIIIIIIII');
+            this.dataService.getUserStats(result.username).subscribe((res: any) => {
+                console.log(res);
+                console.log('JJJJJJJJJ');
+                this.subscriptions.push({
+                    username: res.username,
+                    avatarSrc: 'img/' + res.imageUId,
+                    followersCount: res.followers?.length || 0,
+                    postsCount: res.posts?.length || 0,
+                });
+            })
+        } else {
+            this.subscriptions = this.subscriptions.filter((sub) => sub.username !== result.username);
+        }
+    }
+
+    private loadSubs(): void {
         this.dataService.getUserStats(localStorage.getItem("username") || '')
             .subscribe((res: any) => {
                     console.log(res);
@@ -43,6 +69,7 @@ export class RightSidePanelComponent implements OnInit {
                             });
                         })
                     }
+                    console.log(this.subscriptions);
                 },
                 (err: any) => {
                     if (err.status === 401) {
@@ -62,7 +89,21 @@ export class RightSidePanelComponent implements OnInit {
         this.uploadedFileName = inputNode?.files?.[0]?.name || '';
     }
 
-    public createPostRequest(): void {
+    public updateAvatar(): void {
+        const inputNode: any = document.querySelector('#avatarFile');
+        let formData = new FormData();
+        formData.append("file", inputNode?.files[0] || null);
+        this.dataService.uploadPhoto(formData)
+            .subscribe((res: any) => {
+                console.log(res);
+                this.dataService.updateAvatar(res.imageUId)
+                    .subscribe((result: any) => {
+                        this.loggedInUser.avatarSrc = 'img/' + result.imageUId;
+                    })
+            })
+    }
+
+    public async createPostRequest() {
         const inputNode: any = document.querySelector('#file');
         this.uploadedFileName = inputNode?.files?.[0]?.name || '';
         let photo = inputNode?.files?.[0];
@@ -71,6 +112,10 @@ export class RightSidePanelComponent implements OnInit {
         formData.append("file", photo);
         // @ts-ignore
         this.dataService.createPost(formData, document.getElementById("postDescription")?.value || '');
+    }
+
+    unfollow(username: string): void {
+        this.dataService.unfollowRequest(username);
     }
 
 }

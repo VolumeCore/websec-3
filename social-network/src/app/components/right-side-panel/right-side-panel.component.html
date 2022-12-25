@@ -2,27 +2,29 @@
     <mat-card class="my-account">
         <mat-card-header class="my-account__header" *ngIf="isAuthorized; else noAuthorized">
             <div mat-card-avatar
-                 style="background-image: url('{{loggedInUser.avatarSrc}}'); width: 55px; height: 55px;"
-                 class="my-account__header-image"
+                 style="background-image: url('{{loggedInUser.avatarSrc}}'); width: 55px; height: 55px; cursor: pointer;"
+                 class="my-account__header-image my-image"
+                 (click)="avatarInput.click()"
             ></div>
             <mat-card-title class="my-account__header-username" [routerLink]="['user', loggedInUser.username]" routerLinkActive="active" style="cursor: pointer">{{loggedInUser.username}}</mat-card-title>
             <mat-icon svgIcon="logout-icon" class="post__actions_right-side _icon" (click)="logout()"></mat-icon>
             <mat-card-subtitle class="my-account__header-followers">Подписчики {{loggedInUser.followersCount}}</mat-card-subtitle>
-            <mat-card-subtitle class="my-account__header-posts">Постов {{loggedInUser.followsCount}}</mat-card-subtitle>
+            <mat-card-subtitle class="my-account__header-posts">Постов {{loggedInUser?.postsCount}}</mat-card-subtitle>
+            <input hidden (change)="updateAvatar()" #avatarInput type="file" id="avatarFile">
         </mat-card-header>
     </mat-card>
-    <mat-card class="followed-users">
+    <mat-card class="followed-users" *ngIf="isAuthorized">
         <h3 style="{{subscriptions.length ? '' : 'padding-bottom: 12px;'}} font-weight: 500;">{{subscriptions.length ? 'Ваши подписки' : 'Вы ни на кого не подписаны'}}</h3>
-        <mat-card-header *ngFor="let followedUser of subscriptions.slice(0, 6)" class="followed-user__header">
+        <mat-card-header *ngFor="let followedUser of subscriptions" class="followed-user__header">
             <div mat-card-avatar
                  style="background-image: url('{{followedUser.avatarSrc}}')"
                  class="followed-user__header-image"
             ></div>
             <mat-card-title class="followed-user__header-username" [routerLink]="['user', followedUser.username]" style="cursor: pointer">{{followedUser.username}}</mat-card-title>
-            <mat-card-subtitle class="post__header-date">Отписаться</mat-card-subtitle>
+            <mat-card-subtitle class="followed-user__header-action" (click)="unfollow(followedUser.username)">Отписаться</mat-card-subtitle>
         </mat-card-header>
     </mat-card>
-    <mat-card class="create-post">
+    <mat-card class="create-post" *ngIf="isAuthorized">
         <h3>Создать пост</h3>
         <button type="button" mat-raised-button (click)="fileInput.click()">Выбрать фото</button><span style="margin-left: 10px;">{{uploadedFileName !== '' ? uploadedFileName.slice(0, 8) + '...' : ''}}</span>
         <input hidden (change)="updateFileName()" #fileInput type="file" id="file">

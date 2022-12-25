@@ -24,6 +24,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { HomeComponent } from './components/home/home.component';
 import {HttpClientModule} from "@angular/common/http";
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const routes: Routes = [
     {path : '', component : HomeComponent},
@@ -60,7 +62,9 @@ const routes: Routes = [
         MatCheckboxModule,
         [RouterModule.forRoot(routes)],
         [RouterModule],
-        HttpClientModule
+        HttpClientModule,
+        MatDialogModule,
+        BrowserAnimationsModule
     ],
     providers: [DataService],
     bootstrap: [AppComponent]

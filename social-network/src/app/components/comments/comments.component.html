@@ -1,5 +1,5 @@
 <div class="comments-list">
-    <div class="comments-list__comment" *ngFor="let comment of comments">
+    <div class="comments-list__comment" *ngFor="let comment of comments.slice(0, commentsShowCount + 20)">
         <div mat-card-avatar style="background-image: url('{{comment.user.avatarSrc}}')"
              class="comments-list__comment-avatar"></div>
         <p class="comments-list__comment-text">
@@ -8,9 +8,9 @@
             {{comment.commentText}}
         </p>
     </div>
-    <mat-form-field style="width: 100%; height: 20px;" appearance="fill">
+    <mat-form-field style="width: 100%; height: 20px;" appearance="fill" *ngIf="isAuthorized">
         <mat-label>Текст комментария</mat-label>
-        <textarea matInput [(ngModel)]="newCommentText" #commentText="ngModel" name="commentText" id="commentText" style="resize: none; height: 20px;"></textarea>
+        <textarea matInput [(ngModel)]="newCommentText" #commentText="ngModel" name="commentText" id="commentText" maxlength="100" style="resize: none; height: 20px;"></textarea>
     </mat-form-field>
-    <button type="button" mat-flat-button (click)="addComment()" style="margin-top: 30px;">Добавить</button>
+    <button type="button" mat-flat-button (click)="addComment()" style="margin-top: 30px;" *ngIf="isAuthorized">Добавить</button>
 </div>

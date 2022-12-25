@@ -11,6 +11,22 @@
         &__header {
             &-image {
                 background-size: cover;
+                transition: all .25s;
+
+                &.my-image {
+
+                    &:hover {
+                        opacity: .5;
+                    }
+                }
+            }
+
+            &-action {
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                }
             }
 
             &-followers {

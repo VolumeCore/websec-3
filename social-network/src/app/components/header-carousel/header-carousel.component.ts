@@ -1,4 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {DataService} from "../../services/data.service";
+import {UserModel} from "../../models/common.model";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'header-carousel',
@@ -7,19 +10,8 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 })
 export class HeaderCarouselComponent implements OnInit, AfterViewInit {
 
-    public images: { path: string }[] = [
-        {path: 'https://via.placeholder.com/600.png/09f/fff'},
-        {path: 'https://via.placeholder.com/600.png/09f/fff'},
-        {path: 'https://via.placeholder.com/600.png/09f/fff'},
-        {path: 'https://via.placeholder.com/600.png/09f/fff'},
-        {path: 'https://via.placeholder.com/600.png/09f/fff'},
-        {path: 'https://via.placeholder.com/600.png/09f/fff'},
-        {path: 'https://via.placeholder.com/600.png/09f/fff'},
-        {path: 'https://via.placeholder.com/600.png/09f/fff'},
-        {path: 'https://via.placeholder.com/600.png/09f/fff'},
-    ];
-
-    public popular: any[] = ['VolumeCore', 'Prafdin', 'Haustova', 'Gleb.Putilove', 'Jendozzz', 'Divanchik', 'SirlLizz', 'Dezeniz', 'Twin'];
+    public images: { path: string }[];
+    public popular: any[] = [];
 
     public carouselConfig: {
         cellWidth: number,
@@ -37,18 +29,32 @@ export class HeaderCarouselComponent implements OnInit, AfterViewInit {
         margin: 25
     };
 
+    constructor(private dataService: DataService, private router: Router) {
+    }
 
     ngOnInit(): void {
-
+        this.dataService.getUsers()
+            .subscribe((users: any) => {
+                this.images = new Array(users.length);
+                for (let i = 0; i < users.length; i++) {
+                    this.images[i] = { path: 'img/' + users[i].imageUId };
+                    this.popular.push(users[i].username);
+                }
+            })
     }
 
     ngAfterViewInit(): void {
-        const carouselCells: any = document.querySelectorAll(".carousel-cell");
-        for (let i = 0; i < carouselCells.length; i++) {
+        let carousel = document.querySelector(".carousel-cells");
+        console.log(JSON.stringify(carousel?.children));
+        // @ts-ignore
+        for (let i = 0; i < this.popular.length; i++) {
             const info = document.createElement("div");
             info.classList.add("carousel-cell__info");
+            console.log(carousel?.children[i]);
             info.innerHTML = this.popular[i].length > 7 ? this.popular[i].slice(0, 7) + '...' : this.popular[i];
-            carouselCells[i].appendChild(info);
+            info.addEventListener('click', () => this.router.navigate(['user', this.popular[i]]));
+            carousel?.children[i].appendChild(info);
+            carousel?.children[i].addEventListener('click', () => this.router.navigate(['user', this.popular[i]]));
         }
     }
 
