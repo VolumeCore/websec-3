@@ -18,8 +18,17 @@ func Run(Port string, DB *gorm.DB) {
 		DB: DB,
 	}
 
+	router.Use(cors.New(cors.Config{
+		AllowMethods:     []string{"GET", "POST", "OPTIONS", "PUT"},
+		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "User-Agent", "Referrer", "Host", "Token"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowAllOrigins:  false,
+		AllowOriginFunc:  func(origin string) bool { return true },
+		MaxAge:           86400,
+	}))
 	authorized := router.Group("/")
-	authorized.Use(cors.Default())
+
 	authorized.Use(checkJWT())
 	{
 		authorized.GET("/whoami", h.whoamiHandler)
@@ -44,6 +53,7 @@ func Run(Port string, DB *gorm.DB) {
 		open.POST("/register", h.registerHandler)
 		open.POST("/login", h.loginHandler)
 		open.POST("/refresh", h.refreshHandler)
+		open.GET("/get/users", h.getUsers)
 
 		// Only for develop
 		open.GET("/migration_run", h.automigationHandler)

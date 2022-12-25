@@ -8,6 +8,14 @@ import (
 	"strconv"
 )
 
+func (h handler) getUsers(c *gin.Context) {
+	db := h.DB
+	var users []models.User
+
+	db.Find(&users)
+	c.IndentedJSON(http.StatusOK, users)
+}
+
 func (h handler) getUser(c *gin.Context) {
 	id_str := c.Query("id")
 	db := h.DB
