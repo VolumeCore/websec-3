@@ -62,3 +62,22 @@ func (h handler) setBio(c *gin.Context) {
 	db.Save(&user)
 	c.IndentedJSON(http.StatusOK, "OK")
 }
+
+func (h handler) setUserPhoto(c *gin.Context) {
+	claims, err := utils.GetCustomClaims(c)
+	if err != nil {
+		return
+	}
+
+	var payload = map[string]string{}
+	err = c.BindJSON(&payload)
+	if err != nil {
+		return
+	}
+	user := models.User{Username: claims.Username}
+	db := h.DB
+	db.Where("username = ?", user.Username).First(&user)
+	user.ImageUId = payload["imageUId"]
+	db.Save(&user)
+	c.IndentedJSON(http.StatusOK, "OK")
+}
