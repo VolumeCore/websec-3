@@ -26,8 +26,8 @@ func (h handler) registerHandler(c *gin.Context) {
 	}
 
 	fileUID := uuid.New().String()
-	url := "https://xsgames.co/randomusers/avatar.php?g=pixel"
-	err := utils.DownloadFile(url, fmt.Sprintf("/images/%s", fileUID))
+
+	err := utils.GenerateRandomAvatar(fmt.Sprintf("/images/%s", fileUID))
 	if err != nil {
 		return
 	}

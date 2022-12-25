@@ -1,16 +1,17 @@
 package utils
 
 import (
+	"bytes"
 	"context"
 	"errors"
+	"github.com/aofei/cameron"
 	jwtmiddleware "github.com/auth0/go-jwt-middleware/v2"
 	"github.com/auth0/go-jwt-middleware/v2/validator"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/uuid"
 	"hash/fnv"
-	"io"
-	"net/http"
+	"image/png"
 	"os"
 	"time"
 )
@@ -103,16 +104,11 @@ func GetPasswordHash(password string) uint64 {
 	return hasher.Sum64()
 }
 
-func DownloadFile(URL, fileName string) error {
-	//Get the response bytes from the url
-	response, err := http.Get(URL)
+func GenerateRandomAvatar(fileName string) error {
+	buf := bytes.Buffer{}
+	err := png.Encode(&buf, cameron.Identicon([]byte(fileName), 540, 60))
 	if err != nil {
 		return err
-	}
-	defer response.Body.Close()
-
-	if response.StatusCode != 200 {
-		return errors.New("Received non 200 response code")
 	}
 	//Create a empty file
 	file, err := os.Create(fileName)
@@ -120,9 +116,13 @@ func DownloadFile(URL, fileName string) error {
 		return err
 	}
 	defer file.Close()
-
-	//Write the bytes to the fiel
-	_, err = io.Copy(file, response.Body)
+	_, err = buf.WriteTo(file)
+	if err != nil {
+		return err
+	}
+	//
+	////Write the bytes to the fiel
+	//_, err = io.Copy(file, buf)
 	if err != nil {
 		return err
 	}

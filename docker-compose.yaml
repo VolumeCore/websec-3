@@ -52,7 +52,7 @@ services:
       - /tmp/images:/data/images
   server:
     container_name: webserver
-    image: social-network-server:v1.1
+    image: social-network-server:v1.2
     volumes:
       - /tmp/images:/images
   front:
