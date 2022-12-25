@@ -13,7 +13,7 @@
             <input hidden (change)="updateAvatar()" #avatarInput type="file" id="avatarFile">
         </mat-card-header>
     </mat-card>
-    <mat-card class="followed-users" *ngIf="isAuthorized">
+    <mat-card [ngClass]="{'followed-scroll': subscriptions.length > 5}" class="followed-users" *ngIf="isAuthorized" >
         <h3 style="{{subscriptions.length ? '' : 'padding-bottom: 12px;'}} font-weight: 500;">{{subscriptions.length ? 'Ваши подписки' : 'Вы ни на кого не подписаны'}}</h3>
         <mat-card-header *ngFor="let followedUser of subscriptions" class="followed-user__header">
             <div mat-card-avatar

@@ -22,8 +22,10 @@ export class RightSidePanelComponent implements OnInit {
     ngOnInit(): void {
         this.isAuthorized = !!localStorage.getItem("token");
         console.log(localStorage.getItem("username"));
-        this.followersSubscriptions = this.dataService.subscriptionChange.subscribe((value: any) => { console.log(value);
-            console.log('WWWWWWWWWWW'); value ? this.updateSubs(value) : false }, (err: any) => console.log(err));
+        this.followersSubscriptions = this.dataService.subscriptionChange.subscribe(
+            (value: any) => value ? this.updateSubs(value) : false,
+            (err: any) => console.log(err)
+        );
         this.loadSubs();
     }
 
