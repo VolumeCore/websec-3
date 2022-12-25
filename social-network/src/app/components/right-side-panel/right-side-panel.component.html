@@ -17,7 +17,8 @@
         <h3 style="{{subscriptions.length ? '' : 'padding-bottom: 12px;'}} font-weight: 500;">{{subscriptions.length ? 'Ваши подписки' : 'Вы ни на кого не подписаны'}}</h3>
         <mat-card-header *ngFor="let followedUser of subscriptions" class="followed-user__header">
             <div mat-card-avatar
-                 style="background-image: url('{{followedUser.avatarSrc}}')"
+                 [routerLink]="['user', followedUser.username]"
+                 style="background-image: url('{{followedUser.avatarSrc}}'); cursor: pointer;"
                  class="followed-user__header-image"
             ></div>
             <mat-card-title class="followed-user__header-username" [routerLink]="['user', followedUser.username]" style="cursor: pointer">{{followedUser.username}}</mat-card-title>

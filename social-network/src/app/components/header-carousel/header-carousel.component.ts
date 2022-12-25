@@ -12,6 +12,8 @@ export class HeaderCarouselComponent implements OnInit, AfterViewInit {
 
     public images: { path: string }[];
     public popular: any[] = [];
+    public viewInit: boolean = false;
+    public dataLoaded: boolean = false;
 
     public carouselConfig: {
         cellWidth: number,
@@ -40,10 +42,21 @@ export class HeaderCarouselComponent implements OnInit, AfterViewInit {
                     this.images[i] = { path: 'img/' + users[i].imageUId };
                     this.popular.push(users[i].username);
                 }
+                this.dataLoaded = true;
+                if (this.viewInit && this.dataLoaded) {
+                    this.renderCarousel();
+                }
             })
     }
 
     ngAfterViewInit(): void {
+        this.viewInit = true;
+        if (this.viewInit && this.dataLoaded) {
+            this.renderCarousel();
+        }
+    }
+
+    private renderCarousel(): void {
         let carousel = document.querySelector(".carousel-cells");
         console.log(JSON.stringify(carousel?.children));
         // @ts-ignore
