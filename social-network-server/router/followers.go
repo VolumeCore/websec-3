@@ -39,6 +39,6 @@ func (h handler) unsubscribe(c *gin.Context) {
 	var follower = models.User{Username: claims.Username}
 	db.Where("username = ?", follower.Username).First(&follower)
 	db.Where("sub_id = ? and user_id = ?", follower.ID, user.ID).Delete(&models.Follower{})
-	db.Where("follow_id = ? and user_id = ?", user.ID, follower.ID).Delete(&models.Follower{})
+	db.Where("follow_id = ? and user_id = ?", user.ID, follower.ID).Delete(&models.Follow{})
 	c.IndentedJSON(http.StatusOK, "OK")
 }
