@@ -1,6 +1,9 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"encoding/json"
+	"gorm.io/gorm"
+)
 
 type User struct {
 	gorm.Model   `json:"-"`
@@ -13,4 +16,30 @@ type User struct {
 	Posts        []Post     `json:"posts"`
 	Followers    []Follower `json:"followers"`
 	Follows      []Follow   `json:"follows"`
+}
+
+func (p User) MarshalJSON() ([]byte, error) {
+	type Alias User
+	return json.Marshal(&struct {
+		ID uint `json:"userId"`
+		*Alias
+	}{
+		Alias: (*Alias)(&p),
+		ID:    p.Model.ID,
+	})
+}
+
+func (b *User) UnmarshalJSON(data []byte) error {
+	type Alias User
+	aux := &struct {
+		ID uint `json:"userId"`
+		*Alias
+	}{
+		Alias: (*Alias)(b),
+	}
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	b.ID = aux.ID
+	return nil
 }
