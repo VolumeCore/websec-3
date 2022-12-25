@@ -25,7 +25,6 @@ services:
       - 3309:3306
     volumes:
       - /var/lib/mysql:/var/lib/mysql
-      - ./social-network-server/db_migration/:/docker-entrypoint-initdb.d
   mysql-dev:
     container_name: mysqldb
     image: mysql:8.0.31
@@ -46,8 +45,20 @@ services:
   nginx-with-front:
     container_name: front_nginx
     build: social-network
-    image: social-network-frontend:v1
+    image: social-network-frontend:v3
     ports:
       - 5556:80
+    volumes:
+      - /tmp/images:/data/images
+  server:
+    container_name: webserver
+    image: social-network-server:v1.0
+    volumes:
+      - /tmp/images:/images
+  front:
+    container_name: front_nginx
+    image: social-network:v1.0
+    ports:
+      - 80:80
     volumes:
       - /tmp/images:/data/images
