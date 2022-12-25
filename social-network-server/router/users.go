@@ -79,5 +79,5 @@ func (h handler) setUserPhoto(c *gin.Context) {
 	db.Where("username = ?", user.Username).First(&user)
 	user.ImageUId = payload["imageUId"]
 	db.Save(&user)
-	c.IndentedJSON(http.StatusOK, "OK")
+	c.IndentedJSON(http.StatusOK, payload)
 }
