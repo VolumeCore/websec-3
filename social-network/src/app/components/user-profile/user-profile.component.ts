@@ -82,7 +82,7 @@ export class UserProfileComponent implements OnInit {
                                     commentText: comment.commentText,
                                     date: comment.date,
                                 };
-                                this?.userInfo?.posts?.[0]?.comments.push(resComment);
+                                this.userInfo?.posts?.find((p) => p.id === comment.postId)?.comments.push(resComment);
                             })
                         }
                     }
