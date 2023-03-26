@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bufio"
 	"bytes"
 	"context"
 	"errors"
@@ -12,7 +13,9 @@ import (
 	"github.com/google/uuid"
 	"hash/fnv"
 	"image/png"
+	"log"
 	"os"
+	"strings"
 	"time"
 )
 
