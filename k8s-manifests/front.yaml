@@ -1,0 +1,47 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: social-network-svc
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: social-network
+  clusterIP: None
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: social-network
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: social-network
+  template:
+    metadata:
+      labels:
+        app: social-network
+    spec:
+      containers:
+        - name: social-network-server
+          image: prafdin/social-network:v1.5
+          ports:
+            - name: http
+              containerPort: 80
+          volumeMounts:
+            - name: images-vol
+              mountPath: /data/images
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 256Mi
+              cpu: 200m
+      volumes:
+        - name: images-vol
+          persistentVolumeClaim:
+            claimName: standart-pvc
