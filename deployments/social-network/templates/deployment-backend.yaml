@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.backend.app_name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.backend.app_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.backend.app_name }}
+    spec:
+      securityContext:
+        runAsGroup: 1000
+        runAsUser: 1000
+      containers:
+        - name: {{ .Values.backend.app_name }}
+          image: {{ .Values.backend.image }}
+          ports:
+            - name: http
+              containerPort: '{{ .Values.backend.port }}'
+          volumeMounts:
+            - name: images-vol
+              mountPath: /images
+            - name: config
+              mountPath: /var/app.properties
+              subPath: config.yaml
+          resources:
+            requests:
+              memory: {{ .Values.backend.requests.memory }}
+              cpu: {{ .Values.backend.requests.cpu }}
+            limits:
+              memory: {{ .Values.backend.limits.memory }}
+              cpu: {{ .Values.backend.limits.cpu }}
+      volumes:
+        - name: images-vol
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvc.name }}
+        - name: config
+          configMap:
+            name: '{{ .Values.backend.app_name }}-configmap'

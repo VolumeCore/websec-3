@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.frontend.app_name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.frontend.app_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.frontend.app_name }}
+    spec:
+      containers:
+        - name: {{ .Values.frontend.app_name }}
+          image: {{ .Values.frontend.image }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.frontend.port }}
+          volumeMounts:
+            - name: images-vol
+              mountPath: /data/images
+          resources:
+            requests:
+              memory: {{ .Values.frontend.requests.memory }}
+              cpu: {{ .Values.frontend.requests.cpu }}
+            limits:
+              memory: {{ .Values.frontend.limits.memory }}
+              cpu: {{ .Values.frontend.limits.cpu }}
+      volumes:
+        - name: images-vol
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvc.name }}

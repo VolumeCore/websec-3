@@ -1,0 +1,32 @@
+---
+pvc:
+    name: standart-pvc
+
+frontend:
+    app_name: "social-network-frontend"
+    image: "prafdin/social-network:v1.5"
+    port: 80
+    requests:
+        memory: 128Mi
+        cpu: 100m
+    limits:
+        memory: 128Mi
+        cpu: 100m
+
+backend:
+    app_name: "social-network-backend"
+    port: 8080
+    image: "prafdin/social-network-server:v1.3"
+    requests:
+        memory: 128Mi
+        cpu: 100m
+    limits:
+        memory: 256Mi
+        cpu: 200m
+    db:
+        name: social_network_db
+        user: root
+        password: admin
+        url: mysql-svc.mysql
+
+
