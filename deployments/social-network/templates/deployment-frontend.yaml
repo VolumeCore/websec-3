@@ -22,6 +22,9 @@ spec:
           volumeMounts:
             - name: images-vol
               mountPath: /data/images
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
           resources:
             requests:
               memory: {{ .Values.frontend.requests.memory }}
@@ -33,3 +36,6 @@ spec:
         - name: images-vol
           persistentVolumeClaim:
             claimName: {{ .Values.pvc.name }}
+        - name: nginx-config
+          configMap:
+            name: '{{ .Values.frontend.app_name }}-configmap-nginx'

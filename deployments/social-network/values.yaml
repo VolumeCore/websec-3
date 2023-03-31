@@ -1,10 +1,12 @@
 ---
 pvc:
-    name: standart-pvc
+    name: standard-pvc
+    storage_class_name: "standard" # Use class storage that allows share data between nodes. In case minikube use 'standard' or leave blank for default value
+    storage: 1Gi
 
 frontend:
     app_name: "social-network-frontend"
-    image: "prafdin/social-network:v1.5"
+    image: "prafdin/social-network:v1.6"
     port: 80
     requests:
         memory: 128Mi
