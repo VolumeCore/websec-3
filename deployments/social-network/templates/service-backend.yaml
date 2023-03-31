@@ -5,7 +5,7 @@ metadata:
   name: '{{ .Values.backend.app_name }}-svc'
 spec:
   ports:
-    - port: '{{ .Values.backend.port }}'
+    - port: {{ .Values.backend.port }}
   selector:
     app: '{{ .Values.backend.app_name }}'
   clusterIP: None
